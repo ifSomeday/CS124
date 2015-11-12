@@ -5,8 +5,7 @@ public class testshit {
 	
 	public static void main(String args[]){
 			
-		String iiii = "ASDASD";
-		System.out.println("sadaspppp"+iiii);
+		int i;
 				
 	}
 	
