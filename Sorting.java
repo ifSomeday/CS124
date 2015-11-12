@@ -40,22 +40,30 @@ public class Sorting {
 			array[j+1] = p;
 		}
 		end = System.nanoTime();
-		return end;
+		return(end - start);
 		
 	}
 	
-	public Long shellSort(){
-		return null;
+	public Long shellSort(int[] array){
+		array = array.clone();
+		start = System.nanoTime();
+		end = System.nanoTime();
+		return(end - start);
+	}
+	
+	public Long quickSort(int[] array){
+		array = array.clone();
+		start = System.nanoTime();
+		end = System.nanoTime();
+		return(end - start);
 		
 	}
 	
-	public Long quickSort(){
-		return null;
-		
-	}
-	
-	public Long LSDRadix(){
-		return null;
+	public Long LSDRadix(int[] array){
+		array = array.clone();
+		start = System.nanoTime();
+		end = System.nanoTime();
+		return(end - start);
 		
 	}
 
