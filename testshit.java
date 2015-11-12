@@ -4,17 +4,9 @@ import java.util.regex.Pattern;
 public class testshit {
 	
 	public static void main(String args[]){
-			int array[] = {0,1,2};
 			
-			for(int i : array){
-				System.out.println(i);
-			}
-			
-			change(array);
-			
-			for(int i : array){
-				System.out.println(i);
-			}
+		String iiii = "ASDASD";
+		System.out.println("sadaspppp"+iiii);
 				
 	}
 	
