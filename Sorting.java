@@ -30,10 +30,10 @@ public class Sorting {
 		System.out.println(quickSortTimer(r_1k));
 		System.out.println(quickSortTimer(r_10k));
 		System.out.println(quickSortTimer(r_100k));
-		System.out.println(quickSortTimer(r_1m));*/
+		System.out.println(quickSortTimer(r_1m));
 		for (int y : r_1k) {
 			System.out.print(y + ", ");
-		}
+		}*/
 		scanner.close();
 	}
 
@@ -49,6 +49,10 @@ public class Sorting {
 			array[j + 1] = p;
 		}
 		end = System.nanoTime();
+		for (int y : array) {
+			System.out.print(y + ", ");
+		}
+		System.out.println("");
 		return (end - start);
 
 	}
@@ -72,37 +76,37 @@ public class Sorting {
 		return (end - start);
 	}
 	
-	public static void quickSort(int[] array, int start, int end){
-		int index = partition(array, start, end);
-		if(start < index - 5){
-			quickSort(array, start, index - 1);
+	public static void quickSort(int[] array, int leftIndex, int rightIndex){
+		int index = partition(array,leftIndex,rightIndex);
+		if(leftIndex < index -1){
+			quickSort(array, leftIndex,index);
 		}
-		
-		if(end > index + 5){
-			quickSort(array, index, end);
+		if(rightIndex > index){
+			quickSort(array,index+1,rightIndex);
 		}
-		insertionSort(array);
 	}
 	
 	public static int partition(int[] array, int leftIndex, int rightIndex){
-		int left = array[leftIndex], mid = array[(leftIndex+rightIndex)/2], right = array[rightIndex], pivot;
-		pivot = Math.max(Math.min(left,mid),Math.min(Math.max(left,mid),right));
-		while(leftIndex <= rightIndex){
-			while(array[leftIndex] < pivot){
-				leftIndex++;
-			}
-			while(array[rightIndex] > pivot){
+		int pivot = Math.max(Math.min(array[leftIndex],array[(leftIndex+rightIndex)/2]),Math.min(Math.max(array[leftIndex],array[(leftIndex+rightIndex)/2]),array[rightIndex]));
+		leftIndex--;
+		rightIndex++;
+		while(true){
+			do{
 				rightIndex--;
-			}
+			}while(array[rightIndex] > pivot);
 			
-			if(left <= right){
-				int p = array[rightIndex];
-				array[rightIndex--] = array[leftIndex];
-				array[leftIndex++] = p;
-				
+			do{
+				leftIndex++;
+			}while(array[leftIndex] < pivot);
+			
+			if(leftIndex < rightIndex){
+				int p = array[leftIndex];
+				array[leftIndex] = array[rightIndex];
+				array[rightIndex] = p;
+			} else {
+				return rightIndex;
 			}
 		}
-		return leftIndex;
 	}
 
 	public Long LSDRadix(int[] array) {
