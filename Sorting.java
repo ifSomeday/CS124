@@ -144,6 +144,7 @@ public class Sorting {
 			}
 			LSD[0].clear();
 		}
+		int e = 8+0;
 	}
 	
 	public static int getDigit(int num, int digit){
