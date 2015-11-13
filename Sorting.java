@@ -24,8 +24,8 @@ public class Sorting {
 		r_100k = readFile("r_100k.out",r_100k);
 		r_1m = readFile("r_1m.out",r_1m);
 		
-		System.out.println(quickSortTimer(r_100));
-		System.out.println(insertionSort(r_100));
+		System.out.println(quickSortTimer(r_1m));
+		System.out.println(insertionSortTimer(r_100, 0 , r_100.length));
 		/*System.out.println(quickSortTimer(r_100));
 		System.out.println(quickSortTimer(r_1k));
 		System.out.println(quickSortTimer(r_10k));
@@ -37,17 +37,10 @@ public class Sorting {
 		scanner.close();
 	}
 
-	public static Long insertionSort(int[] array) {
+	public static Long insertionSortTimer(int[] array, int leftIndex, int rightIndex) {
 		array = array.clone();
 		start = System.nanoTime();
-		for (int i = 1; i < array.length; i++) {
-			int p = array[i];
-			int j;
-			for (j = i - 1; j >= 0 && p < array[j]; j--) {
-				array[j + 1] = array[j];
-			}
-			array[j + 1] = p;
-		}
+		insertionSort(array, leftIndex, rightIndex);
 		end = System.nanoTime();
 		for (int y : array) {
 			System.out.print(y + ", ");
@@ -55,6 +48,17 @@ public class Sorting {
 		System.out.println("");
 		return (end - start);
 
+	}
+	
+	public static void insertionSort(int[] array, int leftIndex, int rightIndex){
+		for (int i = leftIndex + 1; i < rightIndex; i++) {
+			int p = array[i];
+			int j;
+			for (j = i - 1; j >= 0 && p < array[j]; j--) {
+				array[j + 1] = array[j];
+			}
+			array[j + 1] = p;
+		}
 	}
 
 	public Long shellSort(int[] array) {
@@ -77,12 +81,18 @@ public class Sorting {
 	}
 	
 	public static void quickSort(int[] array, int leftIndex, int rightIndex){
-		int index = partition(array,leftIndex,rightIndex);
-		if(leftIndex < index -1){
-			quickSort(array, leftIndex,index);
-		}
-		if(rightIndex > index){
-			quickSort(array,index+1,rightIndex);
+		if(leftIndex < rightIndex){
+			if(leftIndex - rightIndex < 5){
+				insertionSort(array,leftIndex,rightIndex);
+			} else {
+				int index = partition(array,leftIndex,rightIndex);
+				if(leftIndex < index - 1){
+					quickSort(array, leftIndex,index);
+				}
+				if(rightIndex > index){
+					quickSort(array,index+1,rightIndex);
+				}
+			}
 		}
 	}
 	
