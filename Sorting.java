@@ -2,9 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Sorting {
 
@@ -25,29 +23,31 @@ public class Sorting {
 
 	public static void main(String args[]) throws FileNotFoundException {
 
-		r_10 = readFile("r_10.out",r_10);
-		r_100 = readFile("r_100.out",r_100);
-		r_1k = readFile("r_1k.out",r_1k);
-		r_10k = readFile("r_10k.out",r_10k);
-		r_100k = readFile("r_100k.out",r_100k);
-		r_1m = readFile("r_1m.out",r_1m);
-		
+		r_10 = readFile("r_10.out", r_10);
+		r_100 = readFile("r_100.out", r_100);
+		r_1k = readFile("r_1k.out", r_1k);
+		r_10k = readFile("r_10k.out", r_10k);
+		r_100k = readFile("r_100k.out", r_100k);
+		r_1m = readFile("r_1m.out", r_1m);
+
 		insertionSortTimer(r_1k);
 		shellSortTimer(r_1k);
 		quickSortTimer(r_1k);
 		LSDRadixTimer(r_1k);
-		
-		/*System.out.println(LSDRadixTimer(r_1m));
-		System.out.println(quickSortTimer(r_1m));
-		System.out.println(insertionSortTimer(r_1m, 0 , r_1m.length));*/
-		/*System.out.println(quickSortTimer(r_100));
-		System.out.println(quickSortTimer(r_1k));
-		System.out.println(quickSortTimer(r_10k));
-		System.out.println(quickSortTimer(r_100k));
-		System.out.println(quickSortTimer(r_1m));
-		for (int y : r_1k) {
-			System.out.print(y + ", ");
-		}*/
+
+		/*
+		 * System.out.println(LSDRadixTimer(r_1m));
+		 * System.out.println(quickSortTimer(r_1m));
+		 * System.out.println(insertionSortTimer(r_1m, 0 , r_1m.length));
+		 */
+		/*
+		 * System.out.println(quickSortTimer(r_100));
+		 * System.out.println(quickSortTimer(r_1k));
+		 * System.out.println(quickSortTimer(r_10k));
+		 * System.out.println(quickSortTimer(r_100k));
+		 * System.out.println(quickSortTimer(r_1m)); for (int y : r_1k) {
+		 * System.out.print(y + ", "); }
+		 */
 		scanner.close();
 	}
 
@@ -56,17 +56,17 @@ public class Sorting {
 		start = System.nanoTime();
 		insertionSort(array, 0, array.length);
 		end = System.nanoTime();
-		for (int y : array) {
+		for (final int y : array) {
 			System.out.print(y + ", ");
 		}
 		System.out.println("");
 		return (end - start);
 
 	}
-	
-	public static void insertionSort(int[] array, int leftIndex, int rightIndex){
+
+	public static void insertionSort(int[] array, int leftIndex, int rightIndex) {
 		for (int i = leftIndex + 1; i < rightIndex; i++) {
-			int p = array[i];
+			final int p = array[i];
 			int j;
 			for (j = i - 1; j >= 0 && p < array[j]; j--) {
 				array[j + 1] = array[j];
@@ -81,41 +81,41 @@ public class Sorting {
 		start = System.nanoTime();
 		shellSort(array);
 		end = System.nanoTime();
-		for(int i : array){
+		for (final int i : array) {
 			System.out.print(i + ", ");
 		}
 		System.out.println("");
 		return (end - start);
 	}
-	
-	public static void shellSort(int[] array){
-		for(int gap : sedgewick){
-			for(int i = gap; i < array.length; i++){
-				int temp = array[i];
-				for(j = i; j >= gap && array[j-gap] > temp; j = j - gap){
-					array[j] = array[j-gap];
+
+	public static void shellSort(int[] array) {
+		for (final int gap : sedgewick) {
+			for (int i = gap; i < array.length; i++) {
+				final int temp = array[i];
+				for (j = i; j >= gap && array[j - gap] > temp; j = j - gap) {
+					array[j] = array[j - gap];
 				}
 				array[j] = temp;
 			}
 		}
 	}
-	
-	public static void generateSequence(int length){
-		length = length/2;
+
+	public static void generateSequence(int length) {
+		length = length / 2;
 		sedgewick.clear();
 		int gap = 0, odd = 0, even = 2;
 		boolean bool = true;
-		while(gap <= length){
-			if(bool){
-				gap = (int) ((9*Math.pow(4, odd))-(9*Math.pow(2, odd))+1);
+		while (gap <= length) {
+			if (bool) {
+				gap = (int) ((9 * Math.pow(4, odd)) - (9 * Math.pow(2, odd)) + 1);
 				odd++;
 				bool = false;
 			} else {
-				gap = (int) (Math.pow(4, even)-(3*Math.pow(2, even))+1);
+				gap = (int) (Math.pow(4, even) - (3 * Math.pow(2, even)) + 1);
 				even++;
 				bool = true;
 			}
-			if(gap <= length){
+			if (gap <= length) {
 				sedgewick.add(gap);
 			}
 		}
@@ -125,46 +125,47 @@ public class Sorting {
 	public static Long quickSortTimer(int[] array) {
 		array = array.clone();
 		start = System.nanoTime();
-		quickSort(array,0,array.length);
+		quickSort(array, 0, array.length);
 		end = System.nanoTime();
-		for (int y : array) {
+		for (final int y : array) {
 			System.out.print(y + ", ");
 		}
 		System.out.println("");
 		return (end - start);
 	}
-	
-	public static void quickSort(int[] array, int leftIndex, int rightIndex){
-		if(leftIndex < rightIndex){
-			if(leftIndex - rightIndex < 5){
-				insertionSort(array,leftIndex,rightIndex);
+
+	public static void quickSort(int[] array, int leftIndex, int rightIndex) {
+		if (leftIndex < rightIndex) {
+			if (leftIndex - rightIndex < 5) {
+				insertionSort(array, leftIndex, rightIndex);
 			} else {
-				int index = partition(array,leftIndex,rightIndex);
-				if(leftIndex < index - 1){
-					quickSort(array, leftIndex,index);
+				final int index = partition(array, leftIndex, rightIndex);
+				if (leftIndex < index - 1) {
+					quickSort(array, leftIndex, index);
 				}
-				if(rightIndex > index){
-					quickSort(array,index+1,rightIndex);
+				if (rightIndex > index) {
+					quickSort(array, index + 1, rightIndex);
 				}
 			}
 		}
 	}
-	
-	public static int partition(int[] array, int leftIndex, int rightIndex){
-		int pivot = Math.max(Math.min(array[leftIndex],array[(leftIndex+rightIndex)/2]),Math.min(Math.max(array[leftIndex],array[(leftIndex+rightIndex)/2]),array[rightIndex]));
+
+	public static int partition(int[] array, int leftIndex, int rightIndex) {
+		final int pivot = Math.max(Math.min(array[leftIndex], array[(leftIndex + rightIndex) / 2]),
+				Math.min(Math.max(array[leftIndex], array[(leftIndex + rightIndex) / 2]), array[rightIndex]));
 		leftIndex--;
 		rightIndex++;
-		while(true){
-			do{
+		while (true) {
+			do {
 				rightIndex--;
-			}while(array[rightIndex] > pivot);
-			
-			do{
+			} while (array[rightIndex] > pivot);
+
+			do {
 				leftIndex++;
-			}while(array[leftIndex] < pivot);
-			
-			if(leftIndex < rightIndex){
-				int p = array[leftIndex];
+			} while (array[leftIndex] < pivot);
+
+			if (leftIndex < rightIndex) {
+				final int p = array[leftIndex];
 				array[leftIndex] = array[rightIndex];
 				array[rightIndex] = p;
 			} else {
@@ -175,64 +176,49 @@ public class Sorting {
 
 	public static Long LSDRadixTimer(int[] array) {
 		array = array.clone();
-		for(int i = 0; i < 10; i++)
+		for (int i = 0; i < 10; i++) {
 			LSD[i] = new ArrayList<Integer>();
+		}
 		start = System.nanoTime();
 		LSDRadix(array);
 		end = System.nanoTime();
-		for (int y : array) {
+		for (final int y : array) {
 			System.out.print(y + ", ");
 		}
 		System.out.println("");
 		return (end - start);
 
 	}
-	
-	public static void LSDRadix(int[] array){
-		for(int d = 1; d < 8 ; d++){
-			for(int i : array){
-				LSD[getDigit(i,d)].add(i);
+
+	public static void LSDRadix(int[] array) {
+		for (int d = 1; d < 8; d++) {
+			for (final int i : array) {
+				LSD[getDigit(i, d)].add(i);
 			}
-			for(int i = 1; i < 10; i++){
+			for (int i = 1; i < 10; i++) {
 				LSD[0].addAll(LSD[i]);
 				LSD[i].clear();
 			}
 			int j = 0;
-			for(int i : LSD[0]){
+			for (final int i : LSD[0]) {
 				array[j++] = i;
 			}
 			LSD[0].clear();
 		}
 	}
-	
-	public static int getDigit(int num, int digit){
-		return (int) ((num/Math.pow(10, digit-1))%10);
+
+	public static int getDigit(int num, int digit) {
+		return (int) ((num / Math.pow(10, digit - 1)) % 10);
 	}
-	
-	public static int[] readFile(String name, int[] array) throws FileNotFoundException{
-		file = new File("random_numbers/"+name);
+
+	public static int[] readFile(String name, int[] array) throws FileNotFoundException {
+		file = new File("random_numbers/" + name);
 		scanner = new Scanner(file);
 		int i = 0;
-		while(scanner.hasNextLine()){
+		while (scanner.hasNextLine()) {
 			array[i++] = Integer.parseInt(scanner.nextLine());
 		}
 		scanner.close();
-		return(array);
+		return (array);
 	}
-	
-	 static void shuffleArray(int[] ar)
-	  {
-	    // If running on Java 6 or older, use `new Random()` on RHS here
-	    Random rnd = ThreadLocalRandom.current();
-	    for (int i = ar.length - 1; i > 0; i--)
-	    {
-	      int index = rnd.nextInt(i + 1);
-	      // Simple swap
-	      int a = ar[index];
-	      ar[index] = ar[i];
-	      ar[i] = a;
-	    }
-	  }
-	
-
 }
