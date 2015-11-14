@@ -2,7 +2,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Sorting {
 
@@ -30,10 +32,7 @@ public class Sorting {
 		r_100k = readFile("r_100k.out",r_100k);
 		r_1m = readFile("r_1m.out",r_1m);
 		
-		generateSequence(1000000);
-		generateSequence(100000);
-		
-		insertionSortTimer(r_1k, 0, r_1k.length);
+		insertionSortTimer(r_1k);
 		shellSortTimer(r_1k);
 		quickSortTimer(r_1k);
 		LSDRadixTimer(r_1k);
@@ -52,10 +51,10 @@ public class Sorting {
 		scanner.close();
 	}
 
-	public static Long insertionSortTimer(int[] array, int leftIndex, int rightIndex) {
+	public static Long insertionSortTimer(int[] array) {
 		array = array.clone();
 		start = System.nanoTime();
-		insertionSort(array, leftIndex, rightIndex);
+		insertionSort(array, 0, array.length);
 		end = System.nanoTime();
 		for (int y : array) {
 			System.out.print(y + ", ");
@@ -91,7 +90,7 @@ public class Sorting {
 	
 	public static void shellSort(int[] array){
 		for(int gap : sedgewick){
-			for(int i = gap; i < array.length-1; i++){
+			for(int i = gap; i < array.length; i++){
 				int temp = array[i];
 				for(j = i; j >= gap && array[j-gap] > temp; j = j - gap){
 					array[j] = array[j-gap];
@@ -126,7 +125,7 @@ public class Sorting {
 	public static Long quickSortTimer(int[] array) {
 		array = array.clone();
 		start = System.nanoTime();
-		quickSort(array,0,array.length-1);
+		quickSort(array,0,array.length);
 		end = System.nanoTime();
 		for (int y : array) {
 			System.out.print(y + ", ");
@@ -220,5 +219,20 @@ public class Sorting {
 		scanner.close();
 		return(array);
 	}
+	
+	 static void shuffleArray(int[] ar)
+	  {
+	    // If running on Java 6 or older, use `new Random()` on RHS here
+	    Random rnd = ThreadLocalRandom.current();
+	    for (int i = ar.length - 1; i > 0; i--)
+	    {
+	      int index = rnd.nextInt(i + 1);
+	      // Simple swap
+	      int a = ar[index];
+	      ar[index] = ar[i];
+	      ar[i] = a;
+	    }
+	  }
+	
 
 }
