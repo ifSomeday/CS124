@@ -10,6 +10,7 @@ public class Sorting {
 	static Long end;
 	static Scanner scanner;
 	static File file;
+	static int j = 0;
 	static int[] r_10 = new int[10];
 	static int[] r_100 = new int[100];
 	static int[] r_1k = new int[1000];
@@ -31,6 +32,11 @@ public class Sorting {
 		
 		generateSequence(1000000);
 		generateSequence(100000);
+		
+		insertionSortTimer(r_1k, 0, r_1k.length);
+		shellSortTimer(r_1k);
+		quickSortTimer(r_1k);
+		LSDRadixTimer(r_1k);
 		
 		/*System.out.println(LSDRadixTimer(r_1m));
 		System.out.println(quickSortTimer(r_1m));
@@ -76,12 +82,22 @@ public class Sorting {
 		start = System.nanoTime();
 		shellSort(array);
 		end = System.nanoTime();
+		for(int i : array){
+			System.out.print(i + ", ");
+		}
+		System.out.println("");
 		return (end - start);
 	}
 	
 	public static void shellSort(int[] array){
 		for(int gap : sedgewick){
-			
+			for(int i = gap; i < array.length-1; i++){
+				int temp = array[i];
+				for(j = i; j >= gap && array[j-gap] > temp; j = j - gap){
+					array[j] = array[j-gap];
+				}
+				array[j] = temp;
+			}
 		}
 	}
 	
@@ -105,9 +121,6 @@ public class Sorting {
 			}
 		}
 		Collections.reverse(sedgewick);
-		for(int i : sedgewick){
-			System.out.println(i);
-		}
 	}
 
 	public static Long quickSortTimer(int[] array) {
@@ -115,6 +128,10 @@ public class Sorting {
 		start = System.nanoTime();
 		quickSort(array,0,array.length-1);
 		end = System.nanoTime();
+		for (int y : array) {
+			System.out.print(y + ", ");
+		}
+		System.out.println("");
 		return (end - start);
 	}
 	
@@ -164,6 +181,10 @@ public class Sorting {
 		start = System.nanoTime();
 		LSDRadix(array);
 		end = System.nanoTime();
+		for (int y : array) {
+			System.out.print(y + ", ");
+		}
+		System.out.println("");
 		return (end - start);
 
 	}
