@@ -15,6 +15,8 @@ public class Sorting {
 	static int[] r_10k = new int[10000];
 	static int[] r_100k = new int[100000];
 	static int[] r_1m = new int[1000000];
+	static ArrayList<Integer> sedgewick = new ArrayList<Integer>();
+	@SuppressWarnings("unchecked")
 	static ArrayList<Integer>[] LSD = new ArrayList[10];
 
 	public static void main(String args[]) throws FileNotFoundException {
@@ -26,9 +28,12 @@ public class Sorting {
 		r_100k = readFile("r_100k.out",r_100k);
 		r_1m = readFile("r_1m.out",r_1m);
 		
-		System.out.println(LSDRadixTimer(r_1m));
+		generateSequence(1000000);
+		generateSequence(100000);
+		
+		/*System.out.println(LSDRadixTimer(r_1m));
 		System.out.println(quickSortTimer(r_1m));
-		System.out.println(insertionSortTimer(r_1m, 0 , r_1m.length));
+		System.out.println(insertionSortTimer(r_1m, 0 , r_1m.length));*/
 		/*System.out.println(quickSortTimer(r_100));
 		System.out.println(quickSortTimer(r_1k));
 		System.out.println(quickSortTimer(r_10k));
@@ -64,11 +69,41 @@ public class Sorting {
 		}
 	}
 
-	public static Long shellSort(int[] array) {
+	public static Long shellSortTimer(int[] array) {
 		array = array.clone();
+		generateSequence(array.length);
 		start = System.nanoTime();
+		shellSort(array);
 		end = System.nanoTime();
 		return (end - start);
+	}
+	
+	public static void shellSort(int[] array){
+		
+	}
+	
+	public static void generateSequence(int length){
+		length = length/2;
+		sedgewick.clear();
+		int gap = 0, odd = 0, even = 2;
+		boolean bool = true;
+		while(gap <= length){
+			if(bool){
+				gap = (int) ((9*Math.pow(4, odd))-(9*Math.pow(2, odd))+1);
+				odd++;
+				bool = false;
+			} else {
+				gap = (int) (Math.pow(4, even)-(3*Math.pow(2, even))+1);
+				even++;
+				bool = true;
+			}
+			if(gap <= length){
+				sedgewick.add(gap);
+			}
+		}
+		for(int i : sedgewick){
+			System.out.println(i);
+		}
 	}
 
 	public static Long quickSortTimer(int[] array) {
@@ -144,7 +179,6 @@ public class Sorting {
 			}
 			LSD[0].clear();
 		}
-		int e = 8+0;
 	}
 	
 	public static int getDigit(int num, int digit){
