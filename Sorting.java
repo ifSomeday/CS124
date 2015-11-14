@@ -115,7 +115,7 @@ public class Sorting {
 
 	public static void quickSort(int[] array, int leftIndex, int rightIndex) {
 		if (leftIndex < rightIndex) {
-			if (leftIndex - rightIndex < 5) {
+			if ( rightIndex - leftIndex < 6) {
 				insertionSort(array, leftIndex, rightIndex);
 			} else {
 				final int index = partition(array, leftIndex, rightIndex);
@@ -131,9 +131,9 @@ public class Sorting {
 
 	public static int partition(int[] array, int leftIndex, int rightIndex) {
 		final int pivot = Math.max(Math.min(array[leftIndex], array[(leftIndex + rightIndex) / 2]),
-				Math.min(Math.max(array[leftIndex], array[(leftIndex + rightIndex) / 2]), array[rightIndex]));
+				Math.min(Math.max(array[leftIndex], array[(leftIndex + rightIndex) / 2]), array[rightIndex-1]));
 		leftIndex--;
-		rightIndex++;
+		//rightIndex++;
 		while (true) {
 			do {
 				rightIndex--;
