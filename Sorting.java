@@ -17,6 +17,7 @@ public class Sorting {
 	static int[] r_10k = new int[10000];
 	static int[] r_100k = new int[100000];
 	static int[] r_1m = new int[1000000];
+	static int[][] arrays = {r_10, r_100, r_1k, r_10k, r_100k, r_1m}; 
 	static ArrayList<Integer> sedgewick = new ArrayList<Integer>();
 	@SuppressWarnings("unchecked")
 	static ArrayList<Integer>[] LSD = new ArrayList[10];
@@ -29,26 +30,17 @@ public class Sorting {
 		r_10k = readFile("r_10k.out", r_10k);
 		r_100k = readFile("r_100k.out", r_100k);
 		r_1m = readFile("r_1m.out", r_1m);
-
-		insertionSortTimer(r_1k);
-		shellSortTimer(r_1k);
-		quickSortTimer(r_1k);
-		LSDRadixTimer(r_1k);
-
-		/*
-		 * System.out.println(LSDRadixTimer(r_1m));
-		 * System.out.println(quickSortTimer(r_1m));
-		 * System.out.println(insertionSortTimer(r_1m, 0 , r_1m.length));
-		 */
-		/*
-		 * System.out.println(quickSortTimer(r_100));
-		 * System.out.println(quickSortTimer(r_1k));
-		 * System.out.println(quickSortTimer(r_10k));
-		 * System.out.println(quickSortTimer(r_100k));
-		 * System.out.println(quickSortTimer(r_1m)); for (int y : r_1k) {
-		 * System.out.print(y + ", "); }
-		 */
 		scanner.close();
+		int[][] arrays = {r_10, r_100, r_1k, r_10k, r_100k, r_1m};
+		
+		for(int ch = 10; ch <= 1000000; ch *= 10){
+			System.out.println(ch + " random characters:");
+			System.out.println("Insertion Sort: " + insertionSortTimer(arrays[(int) (Math.log10(ch)-1)]));
+			System.out.println("Shell sort:     " + shellSortTimer(arrays[(int) (Math.log10(ch)-1)]));
+			System.out.println("Quick sort:     " + quickSortTimer(arrays[(int) (Math.log10(ch)-1)]));
+			System.out.println("LSD Radix Sort: " + LSDRadixTimer(arrays[(int) (Math.log10(ch)-1)]));
+			System.out.println();
+		}
 	}
 
 	public static Long insertionSortTimer(int[] array) {
@@ -56,10 +48,6 @@ public class Sorting {
 		start = System.nanoTime();
 		insertionSort(array, 0, array.length);
 		end = System.nanoTime();
-		for (final int y : array) {
-			System.out.print(y + ", ");
-		}
-		System.out.println("");
 		return (end - start);
 
 	}
@@ -81,10 +69,6 @@ public class Sorting {
 		start = System.nanoTime();
 		shellSort(array);
 		end = System.nanoTime();
-		for (final int i : array) {
-			System.out.print(i + ", ");
-		}
-		System.out.println("");
 		return (end - start);
 	}
 
@@ -127,10 +111,6 @@ public class Sorting {
 		start = System.nanoTime();
 		quickSort(array, 0, array.length);
 		end = System.nanoTime();
-		for (final int y : array) {
-			System.out.print(y + ", ");
-		}
-		System.out.println("");
 		return (end - start);
 	}
 
@@ -182,10 +162,6 @@ public class Sorting {
 		start = System.nanoTime();
 		LSDRadix(array);
 		end = System.nanoTime();
-		for (final int y : array) {
-			System.out.print(y + ", ");
-		}
-		System.out.println("");
 		return (end - start);
 
 	}
