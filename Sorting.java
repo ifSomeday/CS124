@@ -17,7 +17,6 @@ public class Sorting {
 	static int[] r_10k = new int[10000];
 	static int[] r_100k = new int[100000];
 	static int[] r_1m = new int[1000000];
-	static int[][] arrays = {r_10, r_100, r_1k, r_10k, r_100k, r_1m}; 
 	static ArrayList<Integer> sedgewick = new ArrayList<Integer>();
 	@SuppressWarnings("unchecked")
 	static ArrayList<Integer>[] LSD = new ArrayList[10];
@@ -31,14 +30,14 @@ public class Sorting {
 		r_100k = readFile("r_100k.out", r_100k);
 		r_1m = readFile("r_1m.out", r_1m);
 		scanner.close();
-		int[][] arrays = {r_10, r_100, r_1k, r_10k, r_100k, r_1m};
-		
-		for(int ch = 10; ch <= 1000000; ch *= 10){
+		final int[][] arrays = { r_10, r_100, r_1k, r_10k, r_100k, r_1m };
+
+		for (int ch = 10; ch <= 1000000; ch *= 10) {
 			System.out.println(ch + " random characters:");
-			System.out.println("Insertion Sort: " + insertionSortTimer(arrays[(int) (Math.log10(ch)-1)]));
-			System.out.println("Shell sort:     " + shellSortTimer(arrays[(int) (Math.log10(ch)-1)]));
-			System.out.println("Quick sort:     " + quickSortTimer(arrays[(int) (Math.log10(ch)-1)]));
-			System.out.println("LSD Radix Sort: " + LSDRadixTimer(arrays[(int) (Math.log10(ch)-1)]));
+			System.out.println("Insertion Sort: " + insertionSortTimer(arrays[(int) (Math.log10(ch) - 1)]));
+			System.out.println("Shell sort:     " + shellSortTimer(arrays[(int) (Math.log10(ch) - 1)]));
+			System.out.println("Quick sort:     " + quickSortTimer(arrays[(int) (Math.log10(ch) - 1)]));
+			System.out.println("LSD Radix Sort: " + LSDRadixTimer(arrays[(int) (Math.log10(ch) - 1)]));
 			System.out.println();
 		}
 	}
