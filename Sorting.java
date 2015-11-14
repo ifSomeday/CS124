@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Sorting {
@@ -79,7 +80,9 @@ public class Sorting {
 	}
 	
 	public static void shellSort(int[] array){
-		
+		for(int gap : sedgewick){
+			
+		}
 	}
 	
 	public static void generateSequence(int length){
@@ -101,6 +104,7 @@ public class Sorting {
 				sedgewick.add(gap);
 			}
 		}
+		Collections.reverse(sedgewick);
 		for(int i : sedgewick){
 			System.out.println(i);
 		}
