@@ -7,9 +7,19 @@
  */
 public class loginHashTable {
 	
+	private int size;
+	private int filled;
 	
 	loginHashTable(){
 		
+	}
+	
+	public void setSize(){
+		
+	}
+	
+	private double loadValue(){
+		return(filled/size);
 	}
 	
 	public void register(String user, String pass){
