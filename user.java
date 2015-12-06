@@ -54,4 +54,11 @@ public class User {
 	public void setTombstone(boolean tombstone) {
 		this.tombstone = tombstone;
 	}
+
+	@Override
+	public String toString() {
+		return "User [password=" + password + ", username=" + username + ", status=" + status + ", tombstone="
+				+ tombstone + "]";
+	}
+	
 }

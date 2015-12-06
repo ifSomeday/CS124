@@ -9,7 +9,7 @@ public class loginHashTable {
 
 	private int size = 11;
 	private int quadCounter = 0;
-	private int filled;
+	private int filled = 0;
 	private User hashTable[] = new User[size];
 	
 	loginHashTable() {
@@ -25,8 +25,21 @@ public class loginHashTable {
 	}
 
 	public void register(User user) {
-		int key = hash(user.getUsername());
-		insert(user, key);
+		System.out.println(loadValue());
+		if(loadValue() >= 0.5){
+			filled = 0;
+			System.out.println("rehashin");
+			User ar[] = hashTable.clone();
+			size = prime(2);
+			hashTable = new User[size];
+			rehash(ar);
+			ar = null;
+			register(user);
+		} else {
+			int key = hash(user.getUsername());
+			insert(user, key);
+			filled++;
+		}
 	}
 	
 	public void unregister(String user) {
@@ -34,7 +47,9 @@ public class loginHashTable {
 	}
 
 	public void list() {
-
+		for(User u: hashTable){
+			System.out.println(u);
+		}
 	}
 
 	public void login(String user, String pass) {
@@ -57,9 +72,9 @@ public class loginHashTable {
 
 	}
 
-	private int nextPrime() {
+	private int prime(int mult) {
 		boolean prime = false;
-		int num = size + 1;
+		int num = size*mult;
 		while (!prime) {
 			test: if (num % 2 == 0) {
 				num++;
@@ -74,12 +89,13 @@ public class loginHashTable {
 				}
 			}
 		}
+		System.out.println(num);
 		return(num);
 	}
 
 	private  int prevPrime() {
 		boolean prime = false;
-		int num = size - 1;
+		int num = size;
 		while (!prime) {
 			test: if (num % 2 == 0) {
 				num--;
@@ -94,11 +110,12 @@ public class loginHashTable {
 				}
 			}
 		}
+
 		return(num);
 	}
 	
 	private double loadValue() {
-		return ((double)(filled / size));
+		return ((double)filled/(double)size);
 	}
 	
 	private int hash(String user){
@@ -121,6 +138,15 @@ public class loginHashTable {
 			quadCounter++;
 			key = hashQuad(key, quadCounter);
 			insert(user, key);
+		}
+	}
+
+	
+	private void rehash(User[] ar){
+		for(User u: ar){
+			if(u != null){
+				register(u);
+			}
 		}
 	}
 }
