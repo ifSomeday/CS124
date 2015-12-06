@@ -4,19 +4,19 @@
  * all code written by Will Rice.
  * Copying code without permission is expressly prohibited.
  */
-public class user {
+public class User {
 
 
-	String password;
-	String username;
-	boolean status;
-	boolean tombstone;
+	private String password;
+	private String username;
+	private boolean status;
+	private boolean tombstone;
 	
-	public user(){
+	public User(){
 		
 	}
 	
-	public user(String username, String password, boolean status, boolean tombstone){
+	public User(String username, String password, boolean status, boolean tombstone){
 		this.username = username;
 		this.password = password;
 		this.status = status;
