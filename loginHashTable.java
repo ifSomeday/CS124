@@ -16,19 +16,15 @@ public class loginHashTable {
 		
 	}
 
-	public void setSize() {
-		
-	}
-
 	public void register(String user, String pass) {
 		register(new User(user,pass,false,false));
 	}
 
 	public void register(User user) {
-		System.out.println(loadValue());
+		//System.out.println(loadValue());
 		if(loadValue() >= 0.5){
 			filled = 0;
-			System.out.println("rehashin");
+			//System.out.println("rehashin");
 			User ar[] = hashTable.clone();
 			size = prime(2);
 			hashTable = new User[size];
@@ -40,10 +36,11 @@ public class loginHashTable {
 			insert(user, key);
 			filled++;
 		}
+		System.out.println("User " + user.getUsername() + " registered!");
 	}
 	
 	public void unregister(String user) {
-
+		
 	}
 
 	public void list() {
@@ -53,7 +50,18 @@ public class loginHashTable {
 	}
 
 	public void login(String user, String pass) {
-
+		int index = search(user, hash(user), 0);
+		if(index != -1){
+			System.out.println(hashTable[index].getPassword());
+			if(hashTable[index].getPassword().equals(pass)){
+				hashTable[index].setStatus(true);
+				System.out.println(user + " logged in!");
+			} else {
+				System.out.println("Invalid password");
+			}
+		} else {
+			System.out.println("User not found.");
+		}
 	}
 
 	public void logout(String user) {
@@ -89,7 +97,7 @@ public class loginHashTable {
 				}
 			}
 		}
-		System.out.println(num);
+		//System.out.println(num);
 		return(num);
 	}
 
@@ -138,6 +146,18 @@ public class loginHashTable {
 			quadCounter++;
 			key = hashQuad(key, quadCounter);
 			insert(user, key);
+		}
+	}
+	
+	private int search(String user, int k, int i){
+		if(i > size){
+			return(-1);
+		}
+		System.out.println(hashTable[(k + (int)(Math.pow(i, 2)))%size]);
+		if(hashTable[(k + (int)(Math.pow(i, 2)))%size] != null && hashTable[(k + (int)(Math.pow(i, 2)))%size].getUsername().equals(user)){
+			return((k + (int)(Math.pow(k, i)))%size);
+		} else {
+			return(search(user, k, ++i));
 		}
 	}
 
