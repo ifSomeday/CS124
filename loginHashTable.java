@@ -21,10 +21,8 @@ public class loginHashTable {
 	}
 
 	public void register(User user) {
-		//System.out.println(loadValue());
 		if(loadValue() >= 0.5){
 			filled = 0;
-			//System.out.println("rehashin");
 			User ar[] = hashTable.clone();
 			size = prime(2);
 			hashTable = new User[size];
@@ -33,10 +31,10 @@ public class loginHashTable {
 			register(user);
 		} else {
 			int key = hash(user.getUsername());
-			insert(user, key);
+			insert(user, key, 0);
 			filled++;
 		}
-		System.out.println("User " + user.getUsername() + " registered!");
+		
 	}
 	
 	public void unregister(String user) {
@@ -52,7 +50,6 @@ public class loginHashTable {
 	public void login(String user, String pass) {
 		int index = search(user, hash(user), 0);
 		if(index != -1){
-			System.out.println(hashTable[index].getPassword());
 			if(hashTable[index].getPassword().equals(pass)){
 				hashTable[index].setStatus(true);
 				System.out.println(user + " logged in!");
@@ -97,7 +94,6 @@ public class loginHashTable {
 				}
 			}
 		}
-		//System.out.println(num);
 		return(num);
 	}
 
@@ -134,18 +130,13 @@ public class loginHashTable {
 		return(key%this.size);
 	}
 	
-	private int hashQuad(int key, int i){
-		return((int)((key + Math.pow(i, 2))%this.size));
-	}
-	
-	private void insert(User user, int key){
+	private void insert(User user, int k, int i){
+		int key = (int)((k + Math.pow(i, 2))%this.size);
 		if(hashTable[key] == null){
-			quadCounter = 0;
+			//System.out.println("inserting at: " + key);
 			hashTable[key] = user;
 		} else {
-			quadCounter++;
-			key = hashQuad(key, quadCounter);
-			insert(user, key);
+			insert(user, k, ++i);
 		}
 	}
 	
@@ -153,9 +144,9 @@ public class loginHashTable {
 		if(i > size){
 			return(-1);
 		}
-		System.out.println(hashTable[(k + (int)(Math.pow(i, 2)))%size]);
-		if(hashTable[(k + (int)(Math.pow(i, 2)))%size] != null && hashTable[(k + (int)(Math.pow(i, 2)))%size].getUsername().equals(user)){
-			return((k + (int)(Math.pow(k, i)))%size);
+		//System.out.println(" size: " + size + " key: " + (int)((k + Math.pow(i, 2))%this.size) + " run through: " + i);
+		if(hashTable[(int)((k + Math.pow(i, 2))%this.size)] != null && hashTable[(int)((k + Math.pow(i, 2))%this.size)].getUsername().equals(user)){
+			return((int)((k + Math.pow(i, 2))%this.size));
 		} else {
 			return(search(user, k, ++i));
 		}

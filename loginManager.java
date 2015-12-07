@@ -12,10 +12,11 @@ public final class loginManager {
 		loginHashTable table = new loginHashTable();
 		for(int i = 0; i < 8; i++){
 			table.register("Byung"+i, ""+i);
-			System.out.println("");
 		}
-		table.register("Will", "dicks");
+		table.register("Will", "uj");
+		table.register("Will1", "uj");
 		table.list();
-		table.login("Will", "dicks");
+		System.out.println("");
+		table.login("Will", "uj");
 	}
 }
