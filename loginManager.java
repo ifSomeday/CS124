@@ -18,5 +18,7 @@ public final class loginManager {
 		table.list();
 		System.out.println("");
 		table.login("Will", "uj");
+		table.unregister("Will");
+		table.list();
 	}
 }

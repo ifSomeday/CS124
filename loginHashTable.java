@@ -8,7 +8,6 @@
 public class loginHashTable {
 
 	private int size = 11;
-	private int quadCounter = 0;
 	private int filled = 0;
 	private User hashTable[] = new User[size];
 	
@@ -22,23 +21,30 @@ public class loginHashTable {
 
 	public void register(User user) {
 		if(loadValue() >= 0.5){
-			filled = 0;
-			User ar[] = hashTable.clone();
 			size = prime(2);
-			hashTable = new User[size];
-			rehash(ar);
-			ar = null;
+			rehash();
 			register(user);
-		} else {
-			int key = hash(user.getUsername());
-			insert(user, key, 0);
-			filled++;
-		}
-		
+		} 
+		int key = hash(user.getUsername());
+		insert(user, key, 0);
+		filled++;
+		System.out.println("User " + user.getUsername() + " registered!");
 	}
 	
 	public void unregister(String user) {
-		
+		int key = search(user, hash(user), 0);
+		if(key == -1){
+			System.out.println("User not found.");
+		} else {
+			hashTable[key] = null;
+			filled--;
+			System.out.println("User " + user + " removed");
+		}
+		if(loadValue() <= 0.15){
+			size = prime(0.5);
+			rehash();
+			unregister(user);
+		}
 	}
 
 	public void list() {
@@ -77,9 +83,9 @@ public class loginHashTable {
 
 	}
 
-	private int prime(int mult) {
+	private int prime(double mult) {
 		boolean prime = false;
-		int num = size*mult;
+		int num = (int) (size*mult);
 		while (!prime) {
 			test: if (num % 2 == 0) {
 				num++;
@@ -94,27 +100,6 @@ public class loginHashTable {
 				}
 			}
 		}
-		return(num);
-	}
-
-	private  int prevPrime() {
-		boolean prime = false;
-		int num = size;
-		while (!prime) {
-			test: if (num % 2 == 0) {
-				num--;
-			} else {
-				prime = true;
-				for (int i = 3; i <= (int)Math.sqrt(num); i++) {
-					if (num % i == 0) {
-						prime = false;
-						num--;
-						break test;
-					}
-				}
-			}
-		}
-
 		return(num);
 	}
 	
@@ -153,11 +138,14 @@ public class loginHashTable {
 	}
 
 	
-	private void rehash(User[] ar){
+	private void rehash(){
+		User ar[] = hashTable.clone();
+		hashTable = new User[size];
 		for(User u: ar){
 			if(u != null){
-				register(u);
+				insert(u, hash(u.getUsername()), 0);
 			}
 		}
+		ar = null;
 	}
 }
