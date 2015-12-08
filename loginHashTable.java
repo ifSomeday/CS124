@@ -90,9 +90,13 @@ public class loginHashTable {
 			loadDump();
 			break;
 		case("exit"):
+			exit();
 			break;
 		case("help"):
+			help();
+			break;
 		default:
+			System.out.println("Invalid command. enter 'help' for a command list.");
 			break;
 		
 		}
@@ -289,12 +293,12 @@ public class loginHashTable {
 		m = p.matcher(s.nextLine());
 		m.find();
 		size = Integer.parseInt(m.group(1));
-		m = p.matcher(s.nextLine());
+		m = p.matcher(sf.nextLine());
 		m.find();
 		filled  = Integer.parseInt(m.group(1));
 		hashTable = new User[size];
-		while(s.hasNextLine()){
-			d = s.nextLine();
+		while(sf.hasNextLine()){
+			d = sf.nextLine();
 			if(d.equals(null)){
 				m = p.matcher(s.nextLine());
 				m.find();
@@ -305,6 +309,15 @@ public class loginHashTable {
 		System.out.println("Dump successfully loaded!");
 	}
 
+	private void help(){
+		System.out.println("List of Commands:\n\tregister - registers a new user\n\t\toptional arguments: [username], [username] [password]\n\tunregister - unregisters a user\n\t\toptional arguements: [username]\n\tlist - displays a list of registered users \n\tlogin - logs in a registered user\n\t\toptional arguments: [username], [username] [password]\n\tlogout - logs out a logged in user\n\t\toptional arguements: [username]\n\tinspect - inspects a certain element of the hashtable\n\t\toptional arguements: [property] (can be 'size', 'entries', or 'load')\n\tdump - dumps the table to 'dump.txt' for inspection\n\tload - loads the dump located at 'dump.txt'\n\texit - dumps the table and then exits.");
+	}
+	
+	private void exit(){
+		System.out.println("Dumping table and exiting...");
+		System.exit(0);
+	}
+	
 	private int prime(double mult) {
 		boolean prime = false;
 		int num = (int) (size*mult);
