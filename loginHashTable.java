@@ -151,7 +151,6 @@ public class loginHashTable {
 	
 	private void login(){
 		System.out.println("Please enter user to log in, or nothing to cancel: ");
-		
 		String user = s.nextLine();
 		if(!user.equals("")){
 			login(user);
@@ -200,7 +199,7 @@ public class loginHashTable {
 		}
 	}
 	
-	public void logout(String user) {
+	private void logout(String user) {
 		int key = search(user, hash(user), 0);
 		if(key == -1){
 			System.out.println("User " + user + " not found.");
