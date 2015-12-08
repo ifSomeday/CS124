@@ -34,7 +34,6 @@ public class loginHashTable {
 		if(loadValue() >= 0.5){
 			size = prime(2);
 			rehash();
-			register(user);
 		} 
 		int key = hash(user.getUsername());
 		insert(user, key, 0);
