@@ -79,7 +79,7 @@ public class loginHashTable {
 			break;
 		case ("inspect"):
 			if (m.find()) {
-				logout(m.group());
+				inspect(m.group());
 			} else {
 				inspect();
 			}
@@ -372,13 +372,14 @@ public class loginHashTable {
 	private void insert(User user, int k, int i) {
 		int key = (int) ((k + Math.pow(i, 2)) % this.size);
 		if (hashTable[key] == null) {
+				hashTable[key] = user;
+		} else {
 			if(hashTable[key].getUsername().equals(user.getUsername())){
 				System.out.println("Username already taken. Please enter a new username and password.");
+				register();
 			} else {
-				hashTable[key] = user;
+				insert(user, k, ++i);
 			}
-		} else {
-			insert(user, k, ++i);
 		}
 	}
 
