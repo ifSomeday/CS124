@@ -18,19 +18,84 @@ public class loginHashTable {
 	private int filled = 0;
 	private User hashTable[] = new User[size];
 	private Pattern p = Pattern.compile("\\=([^,\\]\\s]*)");
+	private Pattern p2 = Pattern.compile("\\S+");
 	private Matcher m;
 	private Scanner s;
 	private File f;
 	private PrintWriter w;
 	
 	loginHashTable() {
+		
 	}
 
-	public void register(String user, String pass) {
+	public void query(String input){
+		input = input.toLowerCase();
+		m = p2.matcher(input);
+		m.find();
+		switch(m.group()){
+		case("register"):
+			if(m.find()){
+				String user = m.group();
+				if(m.find()){
+					register(user, m.group());
+				} else {
+					register(user);
+				}
+			} else {
+				register();
+			}
+			break;
+		case("unregister"):
+			break;
+		case("list"):
+			list();
+			break;
+		case("login"):
+			break;
+		case("logout"):
+			break;
+		case("users"):
+			users();
+			break;
+		case("inspect"):
+			break;
+		case("dump"):
+			dump();
+			break;
+		case("load"):
+			loadDump();
+			break;
+		case("exit"):
+			break;
+		case("help"):
+		default:
+			break;
+		
+		}
+		System.out.println("\n--------------------------\n");
+	}
+	
+	private void register(){
+		System.out.println("Please enter a username: ");
+		s = new Scanner(System.in);
+		String user = s.nextLine();
+		s.close();
+		register(user);
+	}
+	
+	private void register(String user){
+		System.out.println("Okay, " + user + ", please enter a password: ");
+		s = new Scanner(System.in);
+		String pass = s.nextLine();
+		s.close();
+		register(user, pass);
+	}
+	
+	private void register(String user, String pass) {
 		register(new User(user,pass,false,false));
 	}
 
-	public void register(User user) {
+	private void register(User user) {
 		if(loadValue() >= 0.5){
 			size = prime(2);
 			rehash();
@@ -133,9 +198,11 @@ public class loginHashTable {
 			System.out.println(u);
 		}
 		w.close();
+		System.out.println("Table dump success!");
 	}
 	
 	public void loadDump(){
+		System.out.println("Loading dump...");
 		f = new File("dump.txt");
 		try {
 			s = new Scanner(f);
@@ -162,6 +229,7 @@ public class loginHashTable {
 			}
 			i++;
 		}
+		System.out.println("Dump successfully loaded!");
 	}
 
 	private int prime(double mult) {

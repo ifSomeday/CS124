@@ -11,26 +11,31 @@ public final class loginManager {
 	public static void main(String[] args){
 		loginHashTable table = new loginHashTable();
 		for(int i = 0; i < 8; i++){
-			table.register("Byung"+i, ""+i);
+			table.query("register Byung"+i + " "+i);
 		}
-		table.register("Will", "uj");
+		
+		table.query("register uuuu");
+		table.query("register uuuu2 uuuu2");
+		table.query("list");
+		
+		/*table.register("Will", "uj");
 		table.register("Will1", "uj");
-		table.list();
-		System.out.println("");
+		table.query("list");
+		table.query("register uuuu");
+		table.query("register uuuu2 uuuu2");
 		table.login("Will", "uj");
 		table.logout("Will1");
 		table.login("Will1", "uj");
-		table.users();
+		table.query("users");
 		table.unregister("Will");
 		table.logout("Will1");
-		table.inspect("sdf");
 		table.inspect("size");
 		table.inspect("load");
 		table.inspect("entries");
-		table.dump();
-		table.list();
+		table.query("dump");
+
 		 
-		table.loadDump();
-		table.list();
+		table.query("load");
+		table.query("list");*/
 	}
 }
