@@ -19,6 +19,7 @@ public class loginHashTable {
 	private User hashTable[] = new User[size];
 	private Pattern p = Pattern.compile("\\=([^,\\]\\s]*)");
 	private Pattern p2 = Pattern.compile("\\S+");
+	private String p3 = "[a-zA-Z\\d._]+";
 	private Matcher m;
 	private Scanner sf, s = new Scanner(System.in);
 	private File f;
@@ -104,15 +105,31 @@ public class loginHashTable {
 	}
 
 	private void register() {
-		System.out.println("Please enter a username: ");
+		System.out.println("Please enter a username or nothing to cancel: ");
 		String user = s.nextLine();
-		register(user);
+		if(user.equals(null)){
+			System.out.println("Canceling...");
+		}
+		if(!user.matches(p3)){
+			System.out.println("Username " + user + " contains invalid characters.\nOnly letters, digits, underscores, and periods allowed.");
+			register();
+		} else {
+			register(user);
+		}
 	}
 
 	private void register(String user) {
-		System.out.println("Okay, " + user + ", please enter a password: ");
+		System.out.println("Okay, " + user + ", please enter a password or nothing to select a new username: ");
 		String pass = s.nextLine();
-		register(user, pass);
+		if(!pass.equals("")){
+			System.out.println("Canceling...");
+			register();
+		} else if(pass.length() < 6 || pass.length() > 10){
+			System.out.println("Passwords must be between 6 and 10 characters.");
+			register(user);
+		} else {
+			register(user, pass);
+		}
 	}
 
 	private void register(String user, String pass) {
@@ -355,7 +372,11 @@ public class loginHashTable {
 	private void insert(User user, int k, int i) {
 		int key = (int) ((k + Math.pow(i, 2)) % this.size);
 		if (hashTable[key] == null) {
-			hashTable[key] = user;
+			if(hashTable[key].getUsername().equals(user.getUsername())){
+				System.out.println("Username already taken. Please enter a new username and password.");
+			} else {
+				hashTable[key] = user;
+			}
 		} else {
 			insert(user, k, ++i);
 		}
