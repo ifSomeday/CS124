@@ -18,7 +18,11 @@ public final class loginManager {
 		table.list();
 		System.out.println("");
 		table.login("Will", "uj");
+		table.logout("Will1");
+		table.login("Will1", "uj");
+		table.users();
 		table.unregister("Will");
-		table.list();
+		table.logout("Will1");
+		//table.list();
 	}
 }

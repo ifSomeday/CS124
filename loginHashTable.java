@@ -80,10 +80,14 @@ public class loginHashTable {
 	}
 
 	public void users() {
-
+		for(User u: hashTable){
+			if(u != null && u.isStatus()){
+				System.out.println(u);
+			}
+		}
 	}
 
-	public void inspect(int property) {
+	public void inspect(String property) {
 
 	}
 
