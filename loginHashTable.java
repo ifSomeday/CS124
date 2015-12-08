@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,13 +17,13 @@ public class loginHashTable {
 	private int size = 11;
 	private int filled = 0;
 	private User hashTable[] = new User[size];
-	private Pattern p = Pattern.compile("\\=([^,\\]]*)");
+	private Pattern p = Pattern.compile("\\=([^,\\]\\s]*)");
 	private Matcher m;
+	private Scanner s;
 	private File f;
 	private PrintWriter w;
 	
 	loginHashTable() {
-		
 	}
 
 	public void register(String user, String pass) {
@@ -125,14 +126,43 @@ public class loginHashTable {
 			System.out.println("File not found, dump failed.");
 			return;
 		}
-		w.println("buckets: " + size);
-		w.println("filled: " + filled);
+		w.println("buckets=" + size);
+		w.println("filled=" + filled);
 		System.out.println("buckets=" + size + "\nfilled=" + filled);
 		for(User u: hashTable){
 			w.println(u);
 			System.out.println(u);
 		}
 		w.close();
+	}
+	
+	public void loadDump(){
+		f = new File("dump.txt");
+		try {
+			s = new Scanner(f);
+		} catch (FileNotFoundException e) {
+			//e.printStackTrace();
+			System.out.println("Reading dump failed... File not found.");
+			return;
+		}
+		int i = 0;
+		String d;
+		m = p.matcher(s.nextLine());
+		m.find();
+		size = Integer.parseInt(m.group(1));
+		m = p.matcher(s.nextLine());
+		m.find();
+		filled  = Integer.parseInt(m.group(1));
+		hashTable = new User[size];
+		while(s.hasNextLine()){
+			d = s.nextLine();
+			if(d.equals(null)){
+				m = p.matcher(s.nextLine());
+				m.find();
+				hashTable[i] = (new User(m.group(1),m.group(1),Boolean.parseBoolean(m.group(1)),Boolean.parseBoolean(m.group(1))));
+			}
+			i++;
+		}
 	}
 
 	private int prime(double mult) {

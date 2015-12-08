@@ -28,6 +28,9 @@ public final class loginManager {
 		table.inspect("load");
 		table.inspect("entries");
 		table.dump();
-		//table.list();
+		table.list();
+		 
+		table.loadDump();
+		table.list();
 	}
 }
