@@ -67,6 +67,11 @@ public class loginHashTable {
 			}
 			break;
 		case("logout"):
+			if(m.find()){
+				logout(m.group());
+			} else {
+				logout();
+			}
 			break;
 		case("users"):
 			users();
@@ -157,7 +162,6 @@ public class loginHashTable {
 	
 	private void login(String user){
 		System.out.println("Okay " + user + " please enter your password, or nothing to select a different user: ");
-		
 		String pass = s.nextLine();
 		if(!pass.equals("")){
 			login(user, pass);
@@ -187,13 +191,20 @@ public class loginHashTable {
 	}
 
 	private void logout(){
-		System.out.println("Enter the user to log out: ");
+		System.out.println("Enter the user to log out or nothing to cancel: ");
+		String user = s.nextLine();
+		if(!user.equals("")){
+			logout(user);
+		} else {
+			System.out.println("Canceling...");
+		}
 	}
 	
 	public void logout(String user) {
 		int key = search(user, hash(user), 0);
 		if(key == -1){
 			System.out.println("User " + user + " not found.");
+			logout();
 		} else if(hashTable[key].isStatus()){
 			hashTable[key].setStatus(false);
 			System.out.println("User " + user + " logged out.");
