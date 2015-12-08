@@ -121,7 +121,7 @@ public class loginHashTable {
 		try {
 			w = new PrintWriter(f);
 		} catch (FileNotFoundException e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 			System.out.println("File not found, dump failed.");
 			return;
 		}
@@ -140,7 +140,7 @@ public class loginHashTable {
 		try {
 			s = new Scanner(f);
 		} catch (FileNotFoundException e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 			System.out.println("Reading dump failed... File not found.");
 			return;
 		}
@@ -199,7 +199,6 @@ public class loginHashTable {
 	private void insert(User user, int k, int i){
 		int key = (int)((k + Math.pow(i, 2))%this.size);
 		if(hashTable[key] == null){
-			//System.out.println("inserting at: " + key);
 			hashTable[key] = user;
 		} else {
 			insert(user, k, ++i);
@@ -210,7 +209,6 @@ public class loginHashTable {
 		if(i > size){
 			return(-1);
 		}
-		//System.out.println(" size: " + size + " key: " + (int)((k + Math.pow(i, 2))%this.size) + " run through: " + i);
 		if(hashTable[(int)((k + Math.pow(i, 2))%this.size)] != null && hashTable[(int)((k + Math.pow(i, 2))%this.size)].getUsername().equals(user)){
 			return((int)((k + Math.pow(i, 2))%this.size));
 		} else {
