@@ -133,7 +133,15 @@ public class loginHashTable {
 	}
 
 	private void register(String user, String pass) {
-		register(new User(user, pass, false, false));
+		if(!user.matches(p3)){
+			System.out.println("Username " + user + " contains invalid characters.\nOnly letters, digits, underscores, and periods allowed.");
+			register();
+		} else if (pass.length() < 6 || pass.length() > 10){
+			System.out.println("Passwords must be between 6 and 10 characters.");
+			register(user);
+		} else {
+			register(new User(user, pass, false, false));
+		}
 	}
 
 	private void register(User user) {
@@ -270,6 +278,7 @@ public class loginHashTable {
 			break;
 		default:
 			System.out.println("Invalid property to inspect.\nValid properties are 'size', 'load' and 'entries'.");
+			inspect();
 			break;
 		}
 	}
