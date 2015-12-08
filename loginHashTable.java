@@ -68,7 +68,15 @@ public class loginHashTable {
 	}
 
 	public void logout(String user) {
-
+		int key = search(user, hash(user), 0);
+		if(key == -1){
+			System.out.println("User " + user + " not found.");
+		} else if(hashTable[key].isStatus()){
+			hashTable[key].setStatus(false);
+			System.out.println("User " + user + " logged out.");
+		} else {
+			System.out.println("User " + user + " is already logged out!");
+		}
 	}
 
 	public void users() {
