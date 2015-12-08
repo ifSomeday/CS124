@@ -212,7 +212,7 @@ public class loginHashTable {
 		}
 	}
 
-	public void users() {
+	private void users() {
 		for(User u: hashTable){
 			if(u != null && u.isStatus()){
 				System.out.println(u);
@@ -238,7 +238,7 @@ public class loginHashTable {
 		}
 	}
 
-	public void dump() {
+	private void dump() {
 		System.out.println("Dumping Hash Table...");
 		f = new File("dump.txt");
 		try {
@@ -259,7 +259,7 @@ public class loginHashTable {
 		System.out.println("Table dump success!");
 	}
 	
-	public void loadDump(){
+	private void loadDump(){
 		System.out.println("Loading dump...");
 		f = new File("dump.txt");
 		try {
