@@ -132,7 +132,7 @@ public class loginHashTable {
 		}
 	}
 
-	public void list() {
+	private void list() {
 		for(User u: hashTable){
 			System.out.println(u);
 		}
