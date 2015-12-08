@@ -14,10 +14,9 @@ public final class loginManager {
 			table.query("register Byung"+i + " "+i);
 		}
 		
-		table.query("register uuuu");
-		table.query("register uuuu2 uuuu2");
-		table.query("unregister");
-		table.query("unregister uuuu2");
+		table.query("login");
+		table.query("login Byung2");
+		table.query("login Byung3 3");
 		table.query("list");
 		
 		/*table.register("Will", "uj");

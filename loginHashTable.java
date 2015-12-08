@@ -29,10 +29,9 @@ public class loginHashTable {
 	}
 
 	public void query(String input){
-		input = input.toLowerCase();
 		m = p2.matcher(input);
 		m.find();
-		switch(m.group()){
+		switch(m.group().toLowerCase()){
 		case("register"):
 			if(m.find()){
 				String user = m.group();
@@ -56,6 +55,16 @@ public class loginHashTable {
 			list();
 			break;
 		case("login"):
+			if(m.find()){
+				String user = m.group();
+				if(m.find()){
+					login(user, m.group());
+				} else {
+					login(user);
+				}
+			} else {
+				login();
+			}
 			break;
 		case("logout"):
 			break;
@@ -137,18 +146,46 @@ public class loginHashTable {
 			System.out.println(u);
 		}
 	}
+	
+	private void login(){
+		System.out.println("Please enter user to log in, or nothing to cancel: ");
+		s = new Scanner(System.in);
+		String user = s.nextLine();
+		if(!user.equals("")){
+			login(user);
+		} else {
+			System.out.println("Canceling...");
+		}
+	}
+	
+	private void login(String user){
+		System.out.println("Okay " + user + " please enter your password, or nothing to select a different user: ");
+		s = new Scanner(System.in);
+		String pass = s.nextLine();
+		if(!pass.equals("")){
+			login(user, pass);
+		} else {
+			login();
+		}
+	}
 
-	public void login(String user, String pass) {
+	private void login(String user, String pass) {
 		int index = search(user, hash(user), 0);
 		if(index != -1){
 			if(hashTable[index].getPassword().equals(pass)){
-				hashTable[index].setStatus(true);
-				System.out.println(user + " logged in!");
+				if(hashTable[index].isStatus()){
+					System.out.println("User " + user + " is already logged in!" );
+				} else {
+					hashTable[index].setStatus(true);
+					System.out.println(user + " logged in!");
+				}
 			} else {
 				System.out.println("Invalid password");
+				login(user);
 			}
 		} else {
 			System.out.println("User not found.");
+			login();
 		}
 	}
 
