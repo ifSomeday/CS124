@@ -16,6 +16,8 @@ public final class loginManager {
 		
 		table.query("register uuuu");
 		table.query("register uuuu2 uuuu2");
+		table.query("unregister");
+		table.query("unregister uuuu2");
 		table.query("list");
 		
 		/*table.register("Will", "uj");

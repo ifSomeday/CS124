@@ -46,6 +46,11 @@ public class loginHashTable {
 			}
 			break;
 		case("unregister"):
+			if(m.find()){
+				unregister(m.group());
+			} else {
+				unregister();
+			}
 			break;
 		case("list"):
 			list();
@@ -79,7 +84,6 @@ public class loginHashTable {
 		System.out.println("Please enter a username: ");
 		s = new Scanner(System.in);
 		String user = s.nextLine();
-		s.close();
 		register(user);
 	}
 	
@@ -87,7 +91,6 @@ public class loginHashTable {
 		System.out.println("Okay, " + user + ", please enter a password: ");
 		s = new Scanner(System.in);
 		String pass = s.nextLine();
-		s.close();
 		register(user, pass);
 	}
 	
@@ -106,7 +109,14 @@ public class loginHashTable {
 		System.out.println("User " + user.getUsername() + " registered!");
 	}
 	
-	public void unregister(String user) {
+	private void unregister(){
+		System.out.println("Enter user to unregister: ");
+		s = new Scanner(System.in);
+		String input = s.nextLine();
+		unregister(input);
+	}
+	
+	private void unregister(String user) {
 		int key = search(user, hash(user), 0);
 		if(key == -1){
 			System.out.println("User not found.");
