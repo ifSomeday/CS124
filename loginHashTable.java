@@ -20,22 +20,22 @@ public class loginHashTable {
 	private Pattern p = Pattern.compile("\\=([^,\\]\\s]*)");
 	private Pattern p2 = Pattern.compile("\\S+");
 	private Matcher m;
-	private Scanner sf, s = new Scanner(System.in); 
+	private Scanner sf, s = new Scanner(System.in);
 	private File f;
 	private PrintWriter w;
-	
+
 	loginHashTable() {
-		
+
 	}
 
-	public void query(String input){
+	public void query(String input) {
 		m = p2.matcher(input);
 		m.find();
-		switch(m.group().toLowerCase()){
-		case("register"):
-			if(m.find()){
+		switch (m.group().toLowerCase()) {
+		case ("register"):
+			if (m.find()) {
 				String user = m.group();
-				if(m.find()){
+				if (m.find()) {
 					register(user, m.group());
 				} else {
 					register(user);
@@ -44,20 +44,20 @@ public class loginHashTable {
 				register();
 			}
 			break;
-		case("unregister"):
-			if(m.find()){
+		case ("unregister"):
+			if (m.find()) {
 				unregister(m.group());
 			} else {
 				unregister();
 			}
 			break;
-		case("list"):
+		case ("list"):
 			list();
 			break;
-		case("login"):
-			if(m.find()){
+		case ("login"):
+			if (m.find()) {
 				String user = m.group();
-				if(m.find()){
+				if (m.find()) {
 					login(user, m.group());
 				} else {
 					login(user);
@@ -66,86 +66,86 @@ public class loginHashTable {
 				login();
 			}
 			break;
-		case("logout"):
-			if(m.find()){
+		case ("logout"):
+			if (m.find()) {
 				logout(m.group());
 			} else {
 				logout();
 			}
 			break;
-		case("users"):
+		case ("users"):
 			users();
 			break;
-		case("inspect"):
-			if(m.find()){
+		case ("inspect"):
+			if (m.find()) {
 				logout(m.group());
 			} else {
 				inspect();
 			}
 			break;
-		case("dump"):
+		case ("dump"):
 			dump();
 			break;
-		case("load"):
+		case ("load"):
 			loadDump();
 			break;
-		case("exit"):
+		case ("exit"):
 			exit();
 			break;
-		case("help"):
+		case ("help"):
 			help();
 			break;
 		default:
 			System.out.println("Invalid command. enter 'help' for a command list.");
 			break;
-		
+
 		}
 		System.out.println("\n--------------------------\n");
 	}
-	
-	private void register(){
+
+	private void register() {
 		System.out.println("Please enter a username: ");
 		String user = s.nextLine();
 		register(user);
 	}
-	
-	private void register(String user){
+
+	private void register(String user) {
 		System.out.println("Okay, " + user + ", please enter a password: ");
 		String pass = s.nextLine();
 		register(user, pass);
 	}
-	
+
 	private void register(String user, String pass) {
-		register(new User(user,pass,false,false));
+		register(new User(user, pass, false, false));
 	}
 
 	private void register(User user) {
-		if(loadValue() >= 0.5){
+		if (loadValue() >= 0.5) {
 			size = prime(2);
 			rehash();
-		} 
+		}
 		int key = hash(user.getUsername());
 		insert(user, key, 0);
 		filled++;
 		System.out.println("User " + user.getUsername() + " registered!");
 	}
-	
-	private void unregister(){
+
+	private void unregister() {
 		System.out.println("Enter user to unregister: ");
 		String input = s.nextLine();
 		unregister(input);
 	}
-	
+
 	private void unregister(String user) {
 		int key = search(user, hash(user), 0);
-		if(key == -1){
+		if (key == -1) {
 			System.out.println("User not found.");
 		} else {
 			hashTable[key] = null;
 			filled--;
 			System.out.println("User " + user + " removed");
 		}
-		if(loadValue() <= 0.15){
+		if (loadValue() <= 0.15) {
 			size = prime(0.5);
 			rehash();
 			unregister(user);
@@ -153,25 +153,25 @@ public class loginHashTable {
 	}
 
 	private void list() {
-		for(User u: hashTable){
+		for (User u : hashTable) {
 			System.out.println(u);
 		}
 	}
-	
-	private void login(){
+
+	private void login() {
 		System.out.println("Please enter user to log in, or nothing to cancel: ");
 		String user = s.nextLine();
-		if(!user.equals("")){
+		if (!user.equals("")) {
 			login(user);
 		} else {
 			System.out.println("Canceling...");
 		}
 	}
-	
-	private void login(String user){
+
+	private void login(String user) {
 		System.out.println("Okay " + user + " please enter your password, or nothing to select a different user: ");
 		String pass = s.nextLine();
-		if(!pass.equals("")){
+		if (!pass.equals("")) {
 			login(user, pass);
 		} else {
 			login();
@@ -180,10 +180,10 @@ public class loginHashTable {
 
 	private void login(String user, String pass) {
 		int index = search(user, hash(user), 0);
-		if(index != -1){
-			if(hashTable[index].getPassword().equals(pass)){
-				if(hashTable[index].isStatus()){
-					System.out.println("User " + user + " is already logged in!" );
+		if (index != -1) {
+			if (hashTable[index].getPassword().equals(pass)) {
+				if (hashTable[index].isStatus()) {
+					System.out.println("User " + user + " is already logged in!");
 				} else {
 					hashTable[index].setStatus(true);
 					System.out.println(user + " logged in!");
@@ -198,22 +198,22 @@ public class loginHashTable {
 		}
 	}
 
-	private void logout(){
+	private void logout() {
 		System.out.println("Enter the user to log out or nothing to cancel: ");
 		String user = s.nextLine();
-		if(!user.equals("")){
+		if (!user.equals("")) {
 			logout(user);
 		} else {
 			System.out.println("Canceling...");
 		}
 	}
-	
+
 	private void logout(String user) {
 		int key = search(user, hash(user), 0);
-		if(key == -1){
+		if (key == -1) {
 			System.out.println("User " + user + " not found.");
 			logout();
-		} else if(hashTable[key].isStatus()){
+		} else if (hashTable[key].isStatus()) {
 			hashTable[key].setStatus(false);
 			System.out.println("User " + user + " logged out.");
 		} else {
@@ -222,33 +222,33 @@ public class loginHashTable {
 	}
 
 	private void users() {
-		for(User u: hashTable){
-			if(u != null && u.isStatus()){
+		for (User u : hashTable) {
+			if (u != null && u.isStatus()) {
 				System.out.println(u);
 			}
 		}
 	}
 
-	private void inspect(){
+	private void inspect() {
 		System.out.println("Enter a property to inspect or nothing to cancel: ");
 		String input = s.nextLine();
-		if(!input.equals("")){
+		if (!input.equals("")) {
 			inspect(input);
 		} else {
 			System.out.println("Canceling...");
 		}
 	}
-	
+
 	private void inspect(String property) {
 		property = property.toLowerCase();
-		switch(property){
-		case("size"):
+		switch (property) {
+		case ("size"):
 			System.out.println("Table currently has " + size + " buckets.");
 			break;
-		case("load"):
+		case ("load"):
 			System.out.println("The table's load value is currently: " + loadValue() + ".");
 			break;
-		case("entries"):
+		case ("entries"):
 			System.out.println("There are currently " + filled + " active entries in the table.");
 			break;
 		default:
@@ -270,15 +270,15 @@ public class loginHashTable {
 		w.println("buckets=" + size);
 		w.println("filled=" + filled);
 		System.out.println("buckets=" + size + "\nfilled=" + filled);
-		for(User u: hashTable){
+		for (User u : hashTable) {
 			w.println(u);
 			System.out.println(u);
 		}
 		w.close();
 		System.out.println("Table dump success!");
 	}
-	
-	private void loadDump(){
+
+	private void loadDump() {
 		System.out.println("Loading dump...");
 		f = new File("dump.txt");
 		try {
@@ -295,38 +295,40 @@ public class loginHashTable {
 		size = Integer.parseInt(m.group(1));
 		m = p.matcher(sf.nextLine());
 		m.find();
-		filled  = Integer.parseInt(m.group(1));
+		filled = Integer.parseInt(m.group(1));
 		hashTable = new User[size];
-		while(sf.hasNextLine()){
+		while (sf.hasNextLine()) {
 			d = sf.nextLine();
-			if(d.equals(null)){
+			if (d.equals(null)) {
 				m = p.matcher(s.nextLine());
 				m.find();
-				hashTable[i] = (new User(m.group(1),m.group(1),Boolean.parseBoolean(m.group(1)),Boolean.parseBoolean(m.group(1))));
+				hashTable[i] = (new User(m.group(1), m.group(1), Boolean.parseBoolean(m.group(1)),
+						Boolean.parseBoolean(m.group(1))));
 			}
 			i++;
 		}
 		System.out.println("Dump successfully loaded!");
 	}
 
-	private void help(){
-		System.out.println("List of Commands:\n\tregister - registers a new user\n\t\toptional arguments: [username], [username] [password]\n\tunregister - unregisters a user\n\t\toptional arguements: [username]\n\tlist - displays a list of registered users \n\tlogin - logs in a registered user\n\t\toptional arguments: [username], [username] [password]\n\tlogout - logs out a logged in user\n\t\toptional arguements: [username]\n\tinspect - inspects a certain element of the hashtable\n\t\toptional arguements: [property] (can be 'size', 'entries', or 'load')\n\tdump - dumps the table to 'dump.txt' for inspection\n\tload - loads the dump located at 'dump.txt'\n\texit - dumps the table and then exits.");
+	private void help() {
+		System.out.println(
+				"List of Commands:\n\tregister - registers a new user\n\t\toptional arguments: [username], [username] [password]\n\tunregister - unregisters a user\n\t\toptional arguements: [username]\n\tlist - displays a list of registered users \n\tlogin - logs in a registered user\n\t\toptional arguments: [username], [username] [password]\n\tlogout - logs out a logged in user\n\t\toptional arguements: [username]\n\tinspect - inspects a certain element of the hashtable\n\t\toptional arguements: [property] (can be 'size', 'entries', or 'load')\n\tdump - dumps the table to 'dump.txt' for inspection\n\tload - loads the dump located at 'dump.txt'\n\texit - dumps the table and then exits.");
 	}
-	
-	private void exit(){
+
+	private void exit() {
 		System.out.println("Dumping table and exiting...");
 		System.exit(0);
 	}
-	
+
 	private int prime(double mult) {
 		boolean prime = false;
-		int num = (int) (size*mult);
+		int num = (int) (size * mult);
 		while (!prime) {
 			test: if (num % 2 == 0) {
 				num++;
 			} else {
 				prime = true;
-				for (int i = 3; i <= (int)Math.sqrt(num); i++) {
+				for (int i = 3; i <= (int) Math.sqrt(num); i++) {
 					if (num % i == 0) {
 						prime = false;
 						num++;
@@ -335,46 +337,47 @@ public class loginHashTable {
 				}
 			}
 		}
-		return(num);
+		return (num);
 	}
-	
+
 	private double loadValue() {
-		return ((double)filled/(double)size);
+		return ((double) filled / (double) size);
 	}
-	
-	private int hash(String user){
+
+	private int hash(String user) {
 		int key = 0;
-		for(char c: user.toCharArray()){
-			key += (int)c;
+		for (char c : user.toCharArray()) {
+			key += (int) c;
 		}
-		return(key%this.size);
+		return (key % this.size);
 	}
-	
-	private void insert(User user, int k, int i){
-		int key = (int)((k + Math.pow(i, 2))%this.size);
-		if(hashTable[key] == null){
+
+	private void insert(User user, int k, int i) {
+		int key = (int) ((k + Math.pow(i, 2)) % this.size);
+		if (hashTable[key] == null) {
 			hashTable[key] = user;
 		} else {
 			insert(user, k, ++i);
 		}
 	}
-	
-	private int search(String user, int k, int i){
-		if(i > size){
-			return(-1);
+
+	private int search(String user, int k, int i) {
+		if (i > size) {
+			return (-1);
 		}
-		if(hashTable[(int)((k + Math.pow(i, 2))%this.size)] != null && hashTable[(int)((k + Math.pow(i, 2))%this.size)].getUsername().equals(user)){
-			return((int)((k + Math.pow(i, 2))%this.size));
+		if (hashTable[(int) ((k + Math.pow(i, 2)) % this.size)] != null
+				&& hashTable[(int) ((k + Math.pow(i, 2)) % this.size)].getUsername().equals(user)) {
+			return ((int) ((k + Math.pow(i, 2)) % this.size));
 		} else {
-			return(search(user, k, ++i));
+			return (search(user, k, ++i));
 		}
 	}
 
-	private void rehash(){
+	private void rehash() {
 		User ar[] = hashTable.clone();
 		hashTable = new User[size];
-		for(User u: ar){
-			if(u != null){
+		for (User u : ar) {
+			if (u != null) {
 				insert(u, hash(u.getUsername()), 0);
 			}
 		}
