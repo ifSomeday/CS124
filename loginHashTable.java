@@ -1,3 +1,10 @@
+
+/*
+ * Will Rice
+ * CS 124
+ * all code written by Will Rice.
+ * Copying code without permission is expressly prohibited.
+ */
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -5,13 +12,6 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/*
- * Will Rice
- * CS 124
- * all code written by Will Rice.
- * Copying code without permission is expressly prohibited.
- * quadratic probing, double and rehash if 50% full, halve and rehash if 15% full
- */
 public class loginHashTable {
 
 	private int size = 11;
@@ -107,11 +107,12 @@ public class loginHashTable {
 	private void register() {
 		System.out.println("Please enter a username or nothing to cancel: ");
 		String user = s.nextLine();
-		if(user.equals(null)){
+		if (user.equals(null)) {
 			System.out.println("Canceling...");
 		}
-		if(!user.matches(p3)){
-			System.out.println("Username " + user + " contains invalid characters.\nOnly letters, digits, underscores, and periods allowed.");
+		if (!user.matches(p3)) {
+			System.out.println("Username " + user
+					+ " contains invalid characters.\nOnly letters, digits, underscores, and periods allowed.");
 			register();
 		} else {
 			register(user);
@@ -121,10 +122,10 @@ public class loginHashTable {
 	private void register(String user) {
 		System.out.println("Okay, " + user + ", please enter a password or nothing to select a new username: ");
 		String pass = s.nextLine();
-		if(!pass.equals("")){
+		if (!pass.equals("")) {
 			System.out.println("Canceling...");
 			register();
-		} else if(pass.length() < 6 || pass.length() > 10){
+		} else if (pass.length() < 6 || pass.length() > 10) {
 			System.out.println("Passwords must be between 6 and 10 characters.");
 			register(user);
 		} else {
@@ -133,10 +134,11 @@ public class loginHashTable {
 	}
 
 	private void register(String user, String pass) {
-		if(!user.matches(p3)){
-			System.out.println("Username " + user + " contains invalid characters.\nOnly letters, digits, underscores, and periods allowed.");
+		if (!user.matches(p3)) {
+			System.out.println("Username " + user
+					+ " contains invalid characters.\nOnly letters, digits, underscores, and periods allowed.");
 			register();
-		} else if (pass.length() < 6 || pass.length() > 10){
+		} else if (pass.length() < 6 || pass.length() > 10) {
 			System.out.println("Passwords must be between 6 and 10 characters.");
 			register(user);
 		} else {
@@ -381,9 +383,9 @@ public class loginHashTable {
 	private void insert(User user, int k, int i) {
 		int key = (int) ((k + Math.pow(i, 2)) % this.size);
 		if (hashTable[key] == null) {
-				hashTable[key] = user;
+			hashTable[key] = user;
 		} else {
-			if(hashTable[key].getUsername().equals(user.getUsername())){
+			if (hashTable[key].getUsername().equals(user.getUsername())) {
 				System.out.println("Username already taken. Please enter a new username and password.");
 				register();
 			} else {
