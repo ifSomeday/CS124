@@ -20,7 +20,7 @@ public class loginHashTable {
 	private Pattern p = Pattern.compile("\\=([^,\\]\\s]*)");
 	private Pattern p2 = Pattern.compile("\\S+");
 	private Matcher m;
-	private Scanner s;
+	private Scanner sf, s = new Scanner(System.in); 
 	private File f;
 	private PrintWriter w;
 	
@@ -91,14 +91,12 @@ public class loginHashTable {
 	
 	private void register(){
 		System.out.println("Please enter a username: ");
-		s = new Scanner(System.in);
 		String user = s.nextLine();
 		register(user);
 	}
 	
 	private void register(String user){
 		System.out.println("Okay, " + user + ", please enter a password: ");
-		s = new Scanner(System.in);
 		String pass = s.nextLine();
 		register(user, pass);
 	}
@@ -120,7 +118,6 @@ public class loginHashTable {
 	
 	private void unregister(){
 		System.out.println("Enter user to unregister: ");
-		s = new Scanner(System.in);
 		String input = s.nextLine();
 		unregister(input);
 	}
@@ -149,7 +146,7 @@ public class loginHashTable {
 	
 	private void login(){
 		System.out.println("Please enter user to log in, or nothing to cancel: ");
-		s = new Scanner(System.in);
+		
 		String user = s.nextLine();
 		if(!user.equals("")){
 			login(user);
@@ -160,7 +157,7 @@ public class loginHashTable {
 	
 	private void login(String user){
 		System.out.println("Okay " + user + " please enter your password, or nothing to select a different user: ");
-		s = new Scanner(System.in);
+		
 		String pass = s.nextLine();
 		if(!pass.equals("")){
 			login(user, pass);
@@ -189,6 +186,10 @@ public class loginHashTable {
 		}
 	}
 
+	private void logout(){
+		System.out.println("Enter the user to log out: ");
+	}
+	
 	public void logout(String user) {
 		int key = search(user, hash(user), 0);
 		if(key == -1){
@@ -252,7 +253,7 @@ public class loginHashTable {
 		System.out.println("Loading dump...");
 		f = new File("dump.txt");
 		try {
-			s = new Scanner(f);
+			sf = new Scanner(f);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			System.out.println("Reading dump failed... File not found.");
