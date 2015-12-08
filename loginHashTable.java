@@ -345,6 +345,7 @@ public class loginHashTable {
 
 	private void exit() {
 		System.out.println("Dumping table and exiting...");
+		dump();
 		System.exit(0);
 	}
 
