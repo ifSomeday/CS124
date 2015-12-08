@@ -77,6 +77,11 @@ public class loginHashTable {
 			users();
 			break;
 		case("inspect"):
+			if(m.find()){
+				logout(m.group());
+			} else {
+				inspect();
+			}
 			break;
 		case("dump"):
 			dump();
@@ -220,7 +225,17 @@ public class loginHashTable {
 		}
 	}
 
-	public void inspect(String property) {
+	private void inspect(){
+		System.out.println("Enter a property to inspect or nothing to cancel: ");
+		String input = s.nextLine();
+		if(!input.equals("")){
+			inspect(input);
+		} else {
+			System.out.println("Canceling...");
+		}
+	}
+	
+	private void inspect(String property) {
 		property = property.toLowerCase();
 		switch(property){
 		case("size"):
@@ -342,7 +357,6 @@ public class loginHashTable {
 		}
 	}
 
-	
 	private void rehash(){
 		User ar[] = hashTable.clone();
 		hashTable = new User[size];
