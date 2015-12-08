@@ -1,3 +1,9 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /*
  * Will Rice
  * CS 124
@@ -10,6 +16,10 @@ public class loginHashTable {
 	private int size = 11;
 	private int filled = 0;
 	private User hashTable[] = new User[size];
+	private Pattern p = Pattern.compile("\\=([^,\\]]*)");
+	private Matcher m;
+	private File f;
+	private PrintWriter w;
 	
 	loginHashTable() {
 		
@@ -106,7 +116,23 @@ public class loginHashTable {
 	}
 
 	public void dump() {
-
+		System.out.println("Dumping Hash Table...");
+		f = new File("dump.txt");
+		try {
+			w = new PrintWriter(f);
+		} catch (FileNotFoundException e) {
+			//e.printStackTrace();
+			System.out.println("File not found, dump failed.");
+			return;
+		}
+		w.println("buckets: " + size);
+		w.println("filled: " + filled);
+		System.out.println("buckets=" + size + "\nfilled=" + filled);
+		for(User u: hashTable){
+			w.println(u);
+			System.out.println(u);
+		}
+		w.close();
 	}
 
 	private int prime(double mult) {

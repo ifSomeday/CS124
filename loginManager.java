@@ -27,6 +27,7 @@ public final class loginManager {
 		table.inspect("size");
 		table.inspect("load");
 		table.inspect("entries");
+		table.dump();
 		//table.list();
 	}
 }
