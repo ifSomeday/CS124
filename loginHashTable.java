@@ -88,7 +88,21 @@ public class loginHashTable {
 	}
 
 	public void inspect(String property) {
-
+		property = property.toLowerCase();
+		switch(property){
+		case("size"):
+			System.out.println("Table currently has " + size + " buckets.");
+			break;
+		case("load"):
+			System.out.println("The table's load value is currently: " + loadValue() + ".");
+			break;
+		case("entries"):
+			System.out.println("There are currently " + filled + " active entries in the table.");
+			break;
+		default:
+			System.out.println("Invalid property to inspect.\nValid properties are 'size', 'load' and 'entries'.");
+			break;
+		}
 	}
 
 	public void dump() {

@@ -23,6 +23,10 @@ public final class loginManager {
 		table.users();
 		table.unregister("Will");
 		table.logout("Will1");
+		table.inspect("sdf");
+		table.inspect("size");
+		table.inspect("load");
+		table.inspect("entries");
 		//table.list();
 	}
 }
